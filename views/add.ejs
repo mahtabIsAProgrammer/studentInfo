@@ -52,7 +52,7 @@
             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="studentCode"
             name="studentCode"
-            type="text"
+            type="number"
             placeholder="Enter student code"
             required
           />
@@ -94,7 +94,18 @@
                 name="image"
                 class="hidden"
                 accept="image/*"
+                onchange="previewImage(event)"
+                <!--
+                Add
+                this
+                line
+                --
               />
+              <img
+                id="preview"
+                class="mt-4 absolute hidden w-32 h-24 rounded-lg"
+              />
+              <!-- Add this line -->
             </label>
           </div>
         </div>
@@ -107,5 +118,22 @@
         </button>
       </form>
     </div>
+    <script>
+      function previewImage(event) {
+        const file = event.target.files[0]; // Get the uploaded file
+        const preview = document.getElementById("preview"); // Get the image element
+
+        if (file) {
+          const reader = new FileReader(); // Create a FileReader to read the file
+          reader.onload = function (e) {
+            preview.src = e.target.result; // Set the image source to the uploaded file
+            preview.classList.remove("hidden"); // Show the image
+          };
+          reader.readAsDataURL(file); // Read the file as a data URL
+        } else {
+          preview.classList.add("hidden"); // Hide the image if no file is selected
+        }
+      }
+    </script>
   </body>
 </html>
